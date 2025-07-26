@@ -3,18 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mağaza Ziyaret Sistemi - Gelişmiş</title>
+    <title>Mağaza Ziyaret Sistemi - v2.1</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #0d6efd;
-            --success-color: #198754;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
-            --info-color: #0dcaf0;
-        }
-        
         body { 
             background-color: #f8f9fa; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -41,6 +33,12 @@
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
         
         .sidebar { 
@@ -73,21 +71,16 @@
         
         .nav-link:hover { 
             background-color: #f8f9fa; 
-            color: var(--primary-color); 
-            border-left-color: var(--primary-color);
+            color: #0d6efd; 
+            border-left-color: #0d6efd;
             transform: translateX(5px);
         }
         
         .nav-link.active { 
             background-color: rgba(13, 110, 253, 0.1); 
-            color: var(--primary-color); 
-            border-left-color: var(--primary-color);
+            color: #0d6efd; 
+            border-left-color: #0d6efd;
             font-weight: 600;
-        }
-        
-        .nav-link i {
-            width: 20px;
-            margin-right: 10px;
         }
         
         .card { 
@@ -95,11 +88,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
             margin-bottom: 20px; 
             border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-2px);
         }
         
         .stat-card { 
@@ -116,184 +104,46 @@
             margin-bottom: 5px;
         }
         
-        .form-step { 
-            display: none; 
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        
-        .form-step.active { 
-            display: block; 
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .progress-container { 
-            margin: 20px 0; 
-        }
-        
         .btn-primary { 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             border-radius: 8px;
             padding: 10px 20px;
             font-weight: 500;
-            transition: all 0.3s ease;
         }
         
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .table th { 
-            background-color: #f8f9fa; 
-            border-top: none;
-            font-weight: 600;
-            color: #495057;
-        }
-        
-        .checklist-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        .checklist-section h6 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        
-        .form-check-input:checked {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        
-        .conditional-field {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border: 1px solid #dee2e6;
-            animation: slideDown 0.3s ease-out;
-        }
-        
-        @keyframes slideDown {
-            from { opacity: 0; height: 0; }
-            to { opacity: 1; height: auto; }
-        }
-        
-        .badge {
-            font-size: 0.8rem;
-            padding: 5px 10px;
-        }
-        
-        .toast-container {
-            position: fixed;
-            top: 90px;
-            right: 20px;
-            z-index: 9999;
-        }
-        
-        .climate-slider {
-            margin: 20px 0;
-        }
-        
-        .slider-value {
-            background: var(--primary-color);
+        .alert-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 10px;
+        }
+        
+        .alert-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            border: none;
+            color: white;
         }
         
         @media (max-width: 768px) {
-            .sidebar { 
-                position: static; 
-                width: 100%; 
-                height: auto; 
-            }
-            .main-content { 
-                margin-left: 0; 
-            }
-            .nav-link {
-                padding: 10px 15px;
-            }
-        }
-        
-        .loading-spinner {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-        }
-        
-        .form-validation-error {
-            border-color: var(--danger-color) !important;
-            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
-        }
-        
-        .success-message {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            animation: slideUp 0.5s ease-out;
+            .sidebar { position: static; width: 100%; height: auto; }
+            .main-content { margin-left: 0; }
         }
     </style>
 </head>
 <body>
-    <!-- Toast Bildirimleri -->
-    <div class="toast-container">
-        <div id="successToast" class="toast" role="alert">
-            <div class="toast-header">
-                <i class="fas fa-check-circle text-success me-2"></i>
-                <strong class="me-auto">Başarılı</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-            </div>
-            <div class="toast-body" id="successMessage">
-                İşlem başarıyla tamamlandı.
-            </div>
-        </div>
-        
-        <div id="errorToast" class="toast" role="alert">
-            <div class="toast-header">
-                <i class="fas fa-exclamation-triangle text-danger me-2"></i>
-                <strong class="me-auto">Hata</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-            </div>
-            <div class="toast-body" id="errorMessage">
-                Bir hata oluştu.
-            </div>
-        </div>
-    </div>
-
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="loading-spinner">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="visually-hidden">Yükleniyor...</span>
-        </div>
-    </div>
-
     <!-- Giriş Ekranı -->
     <div id="loginScreen" class="login-container">
         <div class="login-card">
             <div class="text-center mb-4">
                 <i class="fas fa-store fa-3x text-primary mb-3"></i>
                 <h2>Mağaza Ziyaret Sistemi</h2>
-                <p class="text-muted">HRBP Ziyaret Kontrol Platformu v2.0</p>
+                <p class="text-muted">HRBP Ziyaret Kontrol Platformu v2.1</p>
             </div>
-            <form onsubmit="login(event)">
+            
+            <!-- Hata/Başarı Mesajları -->
+            <div id="loginAlert" style="display: none;"></div>
+            
+            <form id="loginForm">
                 <div class="mb-3">
                     <label class="form-label">E-posta</label>
                     <input type="email" class="form-control" id="loginEmail" value="demo@example.com" required>
@@ -312,6 +162,13 @@
                 <div class="mt-3 text-center">
                     <small class="text-muted">Demo: demo@example.com / demo123</small>
                 </div>
+                
+                <!-- Alternatif Giriş Bilgileri -->
+                <div class="mt-3">
+                    <small class="text-muted d-block">Diğer test hesapları:</small>
+                    <small class="text-muted d-block">admin@test.com / admin123</small>
+                    <small class="text-muted d-block">hrbp@test.com / hrbp123</small>
+                </div>
             </form>
         </div>
     </div>
@@ -322,12 +179,12 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
-                    <i class="fas fa-store me-2"></i>Mağaza Ziyaret Sistemi v2.0
+                    <i class="fas fa-store me-2"></i>Mağaza Ziyaret Sistemi v2.1
                 </a>
                 <div class="navbar-nav ms-auto">
                     <span class="navbar-text me-3">
                         <i class="fas fa-user me-1"></i>
-                        <span id="currentUser">Demo Kullanıcı</span>
+                        <span id="currentUser">Kullanıcı</span>
                     </span>
                     <a class="nav-link" href="#" onclick="logout()">
                         <i class="fas fa-sign-out-alt me-1"></i>Çıkış
@@ -340,19 +197,16 @@
         <div class="sidebar">
             <div style="padding-top: 20px;">
                 <a href="#" class="nav-link active" onclick="showSection('dashboard', this)">
-                    <i class="fas fa-tachometer-alt"></i>Dashboard
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                 </a>
                 <a href="#" class="nav-link" onclick="showSection('new-visit', this)">
-                    <i class="fas fa-plus"></i>Yeni Ziyaret
+                    <i class="fas fa-plus me-2"></i>Yeni Ziyaret
                 </a>
                 <a href="#" class="nav-link" onclick="showSection('history', this)">
-                    <i class="fas fa-history"></i>Ziyaret Geçmişi
+                    <i class="fas fa-history me-2"></i>Ziyaret Geçmişi
                 </a>
                 <a href="#" class="nav-link" onclick="showSection('reports', this)">
-                    <i class="fas fa-chart-bar"></i>Raporlar
-                </a>
-                <a href="#" class="nav-link" onclick="showSection('settings', this)">
-                    <i class="fas fa-cog"></i>Ayarlar
+                    <i class="fas fa-chart-bar me-2"></i>Raporlar
                 </a>
             </div>
         </div>
@@ -362,99 +216,70 @@
             
             <!-- Dashboard -->
             <div id="dashboard" class="content-section">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h1>
-                    <div>
-                        <button class="btn btn-outline-primary btn-sm me-2" onclick="refreshDashboard()">
-                            <i class="fas fa-sync-alt me-1"></i>Yenile
-                        </button>
-                        <button class="btn btn-primary btn-sm" onclick="showSection('new-visit')">
-                            <i class="fas fa-plus me-1"></i>Yeni Ziyaret
-                        </button>
-                    </div>
-                </div>
+                <h1 class="mb-4"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h1>
                 
                 <!-- İstatistikler -->
                 <div class="row mb-4">
                     <div class="col-md-3 mb-3">
                         <div class="card stat-card">
-                            <div class="stat-number" id="totalVisitsCount">0</div>
+                            <div class="stat-number">127</div>
                             <div>Toplam Ziyaret</div>
-                            <small class="mt-2 d-block">
-                                <i class="fas fa-arrow-up me-1"></i>
-                                <span id="totalVisitsChange">+12%</span> bu ay
-                            </small>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <div class="card stat-card">
-                            <div class="stat-number" id="monthlyVisitsCount">0</div>
+                            <div class="stat-number">23</div>
                             <div>Bu Ay</div>
-                            <small class="mt-2 d-block">
-                                <i class="fas fa-calendar me-1"></i>
-                                Son 30 gün
-                            </small>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <div class="card stat-card">
-                            <div class="stat-number" id="avgClimateScore">0</div>
+                            <div class="stat-number">4.2</div>
                             <div>Ortalama İklim</div>
-                            <small class="mt-2 d-block">
-                                <i class="fas fa-thermometer-half me-1"></i>
-                                5 üzerinden
-                            </small>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <div class="card stat-card">
-                            <div class="stat-number" id="pendingActionsCount">0</div>
+                            <div class="stat-number">8</div>
                             <div>Bekleyen Aksiyon</div>
-                            <small class="mt-2 d-block">
-                                <i class="fas fa-exclamation-triangle me-1"></i>
-                                Takip gerekli
-                            </small>
                         </div>
                     </div>
                 </div>
 
-                <!-- Hızlı Aksiyonlar -->
-                <div class="row mb-4">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5><i class="fas fa-clock me-2"></i>Son Ziyaretler</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Tarih</th>
-                                                <th>Mağaza</th>
-                                                <th>HRBP</th>
-                                                <th>İklim</th>
-                                                <th>Durum</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="recentVisitsTable">
-                                            <!-- JavaScript ile doldurulacak -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Son Ziyaretler -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Son Ziyaretler</h5>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5><i class="fas fa-tasks me-2"></i>Bekleyen Aksiyonlar</h5>
-                            </div>
-                            <div class="card-body">
-                                <div id="pendingActionsList">
-                                    <!-- JavaScript ile doldurulacak -->
-                                </div>
-                            </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Tarih</th>
+                                        <th>Mağaza</th>
+                                        <th>HRBP</th>
+                                        <th>Amaç</th>
+                                        <th>İklim</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>15.01.2024</td>
+                                        <td>İstanbul Kadıköy</td>
+                                        <td>Ahmet Yılmaz</td>
+                                        <td>Rutin</td>
+                                        <td><span class="badge bg-success">4.5</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>14.01.2024</td>
+                                        <td>Ankara Kızılay</td>
+                                        <td>Ayşe Demir</td>
+                                        <td>Etik Hat</td>
+                                        <td><span class="badge bg-warning">3.2</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -462,638 +287,149 @@
 
             <!-- Yeni Ziyaret -->
             <div id="new-visit" class="content-section" style="display: none;">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1><i class="fas fa-plus me-2"></i>Yeni Ziyaret Kaydı</h1>
-                    <div>
-                        <button type="button" class="btn btn-outline-secondary btn-sm me-2" onclick="saveAsDraft()">
-                            <i class="fas fa-save me-1"></i>Taslak Kaydet
-                        </button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="resetForm()">
-                            <i class="fas fa-redo me-1"></i>Formu Sıfırla
-                        </button>
-                    </div>
+                <h1 class="mb-4"><i class="fas fa-plus me-2"></i>Yeni Ziyaret</h1>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Bu bölüm geliştirilme aşamasında...
                 </div>
-                
-                <form id="visitForm" onsubmit="saveVisit(event)" novalidate>
-                    <!-- Adım 1: Genel Bilgiler -->
-                    <div class="form-step active" id="step1">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5><i class="fas fa-info-circle me-2"></i>1. Genel Ziyaret Bilgileri</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Ziyaret Edilen Mağaza *</label>
-                                        <select class="form-select" id="visitStore" required>
-                                            <option value="">Mağaza Seçiniz</option>
-                                            <option value="istanbul-kadikoy">İstanbul Kadıköy</option>
-                                            <option value="istanbul-besiktas">İstanbul Beşiktaş</option>
-                                            <option value="ankara-kizilay">Ankara Kızılay</option>
-                                            <option value="ankara-cankaya">Ankara Çankaya</option>
-                                            <option value="izmir-alsancak">İzmir Alsancak</option>
-                                            <option value="izmir-bornova">İzmir Bornova</option>
-                                            <option value="bursa-osmangazi">Bursa Osmangazi</option>
-                                            <option value="antalya-konyaalti">Antalya Konyaaltı</option>
-                                        </select>
-                                        <div class="invalid-feedback">Lütfen bir mağaza seçiniz.</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Operasyon Bölgesi *</label>
-                                        <select class="form-select" id="visitRegion" required>
-                                            <option value="">Bölge Seçiniz</option>
-                                            <option value="TR1">TR1 - İstanbul Anadolu</option>
-                                            <option value="TR2">TR2 - İstanbul Avrupa</option>
-                                            <option value="IZM1">IZM1 - İzmir</option>
-                                            <option value="ANK1">ANK1 - Ankara</option>
-                                            <option value="BUR1">BUR1 - Bursa</option>
-                                            <option value="ANT1">ANT1 - Antalya</option>
-                                        </select>
-                                        <div class="invalid-feedback">Lütfen bir bölge seçiniz.</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Sorumlu BHRBP *</label>
-                                        <select class="form-select" id="visitHrbp" required>
-                                            <option value="">HRBP Seçiniz</option>
-                                            <option value="ahmet-yilmaz">Ahmet Yılmaz</option>
-                                            <option value="ayse-demir">Ayşe Demir</option>
-                                            <option value="mehmet-kaya">Mehmet Kaya</option>
-                                            <option value="fatma-ozkan">Fatma Özkan</option>
-                                            <option value="ali-celik">Ali Çelik</option>
-                                            <option value="zeynep-arslan">Zeynep Arslan</option>
-                                        </select>
-                                        <div class="invalid-feedback">Lütfen bir HRBP seçiniz.</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Ziyaret Tarihi *</label>
-                                        <input type="date" class="form-control" id="visitDate" required>
-                                        <div class="invalid-feedback">Lütfen ziyaret tarihini giriniz.</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Ziyaret Amacı *</label>
-                                        <select class="form-select" id="visitPurpose" required>
-                                            <option value="">Amaç Seçiniz</option>
-                                            <option value="Rutin">Rutin Ziyaret</option>
-                                            <option value="Tanışma">Tanışma</option>
-                                            <option value="Etik Hat">Etik Hat İncelemesi</option>
-                                            <option value="Bayram Destek">Bayram Destek</option>
-                                            <option value="Sorun Çözme">Sorun Çözme</option>
-                                            <option value="Performans İnceleme">Performans İnceleme</option>
-                                            <option value="Eğitim Desteği">Eğitim Desteği</option>
-                                        </select>
-                                        <div class="invalid-feedback">Lütfen ziyaret amacını seçiniz.</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Görüşülen Kişi Sayısı</label>
-                                        <input type="number" class="form-control" id="interviewedCount" min="0" max="50" placeholder="0">
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Genel Açıklama/Notlar</label>
-                                    <textarea class="form-control" id="generalNotes" rows="3" placeholder="Ziyaret hakkında genel notlarınızı buraya yazabilirsiniz..."></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Takip Edilecek Aksiyonlar</label>
-                                    <textarea class="form-control" id="followUpActions" rows="3" placeholder="Takip edilmesi gereken aksiyonları buraya yazınız..."></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Adım 2: Görsel Kontrol -->
-                    <div class="form-step" id="step2">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5><i class="fas fa-eye me-2"></i>2. Görsel Kontrol Süreçleri</h5>
-                            </div>
-                            <div class="card-body">
-                                <!-- Duyuru Kontrolleri -->
-                                <div class="checklist-section">
-                                    <h6><i class="fas fa-bullhorn me-2"></i>Duyuru ve İletişim Panoları</h6>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Duyuru ve İletişim Panoları güncel mi?</label>
-                                        <div class="mt-2">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="announcements" id="announcements_yes" value="Evet" onchange="toggleConditionalField('announcementDetails', false)">
-                                                <label class="form-check-label" for="announcements_yes">
-                                                    <i class="fas fa-check text-success me-1"></i>Evet
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="announcements" id="announcements_no" value="Hayır" onchange="toggleConditionalField('announcementDetails', true)">
-                                                <label class="form-check-label" for="announcements_no">
-                                                    <i class="fas fa-times text-danger me-1"></i>Hayır
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="announcements" id="announcements_na" value="N/A" onchange="toggleConditionalField('announcementDetails', false)">
-                                                <label class="form-check-label" for="announcements_na">
-                                                    <i class="fas fa-minus text-warning me-1"></i>N/A
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div id="announcementDetails" class="conditional-field" style="display: none;">
-                                        <label class="form-label fw-bold">Eksik olan duyurular:</label>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="ethicsLine">
-                                                    <label class="form-check-label" for="ethicsLine">
-                                                        <i class="fas fa-shield-alt me-1"></i>Etik Hat Bilgilendirme
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="contactBoard">
-                                                    <label class="form-check-label" for="contactBoard">
-                                                        <i class="fas fa-address-book me-1"></i>İletişim Panosu
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="whatsappRules">
-                                                    <label class="form-check-label" for="whatsappRules">
-                                                        <i class="fab fa-whatsapp me-1"></i>WhatsApp Yazışma Kuralları
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="training30min">
-                                                    <label class="form-check-label" for="training30min">
-                                                        <i class="fas fa-clock me-1"></i>30 Dakika Eğitim
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="shoppingProcess">
-                                                    <label class="form-check-label" for="shoppingProcess">
-                                                        <i class="fas fa-shopping-cart me-1"></i>Personel Alışverişi Prosesi
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="psychologist">
-                                                    <label class="form-check-label" for="psychologist">
-                                                        <i class="fas fa-user-md me-1"></i>Şirket Psikoloğu
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="healthInsurance">
-                                                    <label class="form-check-label" for="healthInsurance">
-                                                        <i class="fas fa-heartbeat me-1"></i>Tamamlayıcı Sağlık Sigortası
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="workAccident">
-                                                    <label class="form-check-label" for="workAccident">
-                                                        <i class="fas fa-hard-hat me-1"></i>İş Kazası Duyuru Metni
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3">
-                                            <label for="announcementNotes" class="form-label">Notlar</label>
-                                            <textarea class="form-control" id="announcementNotes" rows="2" placeholder="Duyurular hakkında detaylı notlarınız..."></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Dinlenme Alanı Kontrolleri -->
-                                <div class="checklist-section">
-                                    <h6><i class="fas fa-coffee me-2"></i>Dinlenme Alanı Kontrolleri</h6>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Dinlenme alanlarında tüm ekipmanlar prosedüre uygun ve eksiksiz mi?</label>
-                                        <div class="mt-2">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="restAreaEquipment" id="restArea_yes" value="Evet">
-                                                <label class="form-check-label" for="restArea_yes">
-                                                    <i class="fas fa-check text-success me-1"></i>Evet
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="restAreaEquipment" id="restArea_no" value="Hayır">
-                                                <label class="form-check-label" for="restArea_no">
-                                                    <i class="fas fa-times text-danger me-1"></i>Hayır
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="restAreaEquipment" id="restArea_na" value="N/A">
-                                                <label class="form-check-label" for="restArea_na">
-                                                    <i class="fas fa-minus text-warning me-1"></i>N/A
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="fridge">
-                                                <label class="form-check-label" for="fridge">
-                                                    <i class="fas fa-snowflake me-1"></i>Buzdolabı
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="coffeeMachine">
-                                                <label class="form-check-label" for="coffeeMachine">
-                                                    <i class="fas fa-coffee me-1"></i>Kahve Makinesi
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="teaMachine">
-                                                <label class="form-check-label" for="teaMachine">
-                                                    <i class="fas fa-mug-hot me-1"></i>Çay Makinesi
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="microwave">
-                                                <label class="form-check-label" for="microwave">
-                                                    <i class="fas fa-microchip me-1"></i>Mikrodalga Fırın
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="supplies">
-                                                <label class="form-check-label" for="supplies">
-                                                    <i class="fas fa-cube me-1"></i>Kahve, çay, şeker vb.
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="table">
-                                                <label class="form-check-label" for="table">
-                                                    <i class="fas fa-table me-1"></i>Masa
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="chair">
-                                                <label class="form-check-label" for="chair">
-                                                    <i class="fas fa-chair me-1"></i>Sandalye
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3">
-                                        <label for="restAreaNotes" class="form-label">Notlar</label>
-                                        <textarea class="form-control" id="restAreaNotes" rows="2" placeholder="Dinlenme alanı hakkında detaylı notlarınız..."></textarea>
-                                    </div>
-                                </div>
-
-                                <!-- Diğer Görsel Kontroller -->
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="checklist-section">
-                                            <label class="form-label fw-bold">
-                                                <i class="fas fa-broom me-2"></i>Dinlenme Alanı Hijyenik miydi?
-                                            </label>
-                                            <div class="mt-2">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="restAreaHygiene" value="Evet">
-                                                    <label class="form-check-label">Evet</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="restAreaHygiene" value="Hayır">
-                                                    <label class="form-check-label">Hayır</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="restAreaHygiene" value="N/A">
-                                                    <label class="form-check-label">N/A</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checklist-section">
-                                            <label class="form-label fw-bold">
-                                                <i class="fas fa-tshirt me-2"></i>Personel Kıyafeti talepleri karşılanıyor mu?
-                                            </label>
-                                            <div class="mt-2">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="clothingRequests" value="Evet">
-                                                    <label class="form-check-label">Evet</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="clothingRequests" value="Hayır">
-                                                    <label class="form-check-label">Hayır</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="clothingRequests" value="N/A">
-                                                    <label class="form-check-label">N/A</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Adım 3: Operasyonel Süreçler -->
-                    <div class="form-step" id="step3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5><i class="fas fa-cogs me-2"></i>3. Operasyonel Süreçler</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">
-                                            <i class="fas fa-percentage me-2"></i>PDKS cihazı kart okutma oranı (%)
-                                        </label>
-                                        <input type="number" class="form-control" id="pdksRate" min="0" max="100" placeholder="0-100 arası">
-                                        <div class="form-text">Mağazadaki PDKS kullanım oranını giriniz</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">
-                                            <i class="fas fa-graduation-cap me-2"></i>Eğitim tamamlama oranı (%)
-                                        </label>
-                                        <input type="number" class="form-control" id="trainingRate" min="0" max="100" placeholder="0-100 arası">
-                                        <div class="form-text">Personelin eğitim tamamlama oranı</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">PDKS kullanımı ile ilgili alınan aksiyonlar</label>
-                                    <textarea class="form-control" id="pdksActions" rows="3" placeholder="PDKS ile ilgili alınan aksiyonları detaylandırınız..."></textarea>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="checklist-section">
-                                            <label class="form-label fw-bold">
-                                                <i class="fas fa-clock me-2"></i>270 saati aşan çalışan var mı?
-                                            </label>
-                                            <div class="mt-2">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="over270Hours" value="Evet" onchange="toggleConditionalField('over270Details', this.checked)">
-                                                    <label class="form-check-label">Evet</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="over270Hours" value="Hayır" onchange="toggleConditionalField('over270Details', false)">
-                                                    <label class="form-check-label">Hayır</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="over270Hours" value="N/A" onchange="toggleConditionalField('over270Details', false)">
-                                                    <label class="form-check-label">N/A</label>
-                                                </div>
-                                            </div>
-                                            <div id="over270Details" class="conditional-field mt-3" style="display: none;">
-                                                <label class="form-label">Detaylar</label>
-                                                <textarea class="form-control" rows="2" placeholder="270 saati aşan çalışanlar hakkında detay..."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checklist-section">
-                                            <label class="form-label fw-bold">
-                                                <i class="fas fa-exclamation-triangle me-2"></i>200 saate yaklaşan çalışan var mı?
-                                            </label>
-                                            <div class="mt-2">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="near200Hours" value="Evet" onchange="toggleConditionalField('near200Details', this.checked)">
-                                                    <label class="form-check-label">Evet</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="near200Hours" value="Hayır" onchange="toggleConditionalField('near200Details', false)">
-                                                    <label class="form-check-label">Hayır</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="near200Hours" value="N/A" onchange="toggleConditionalField('near200Details', false)">
-                                                    <label class="form-check-label">N/A</label>
-                                                </div>
-                                            </div>
-                                            <div id="near200Details" class="conditional-field mt-3" style="display: none;">
-                                                <label class="form-label">Detaylar</label>
-                                                <textarea class="form-control" rows="2" placeholder="200 saate yaklaşan çalışanlar hakkında detay..."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">
-                                            <i class="fas fa-users me-2"></i>Yönetim kadrosunun doluluk oranı (%)
-                                        </label>
-                                        <input type="number" class="form-control" id="managementOccupancy" min="0" max="100" placeholder="0-100 arası">
-                                        <div class="form-text">Yönetici pozisyonlarının doluluk oranı</div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">
-                                            <i class="fas fa-chart-line me-2"></i>Turnover oranında standart dışı değişim var mı?
-                                        </label>
-                                        <select class="form-select">
-                                            <option value="">Seçiniz</option>
-                                            <option value="Evet">Evet</option>
-                                            <option value="Hayır">Hayır</option>
-                                            <option value="N/A">N/A</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Adım 4: İklim Değerlendirmesi -->
-                    <div class="form-step" id="step4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5><i class="fas fa-comments me-2"></i>4. İklim Değerlendirmesi ve Gündem</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row mb-4">
-                                    <div class="col-md-6">
-                                        <div class="climate-slider">
-                                            <label class="form-label fw-bold">
-                                                <i class="fas fa-user-tie me-2"></i>Mağaza Genel İklimi - Yönetici Varlığı
-                                            </label>
-                                            <input type="range" class="form-range" min="1" max="5" id="climateLeadership" value="3">
-                                            <div class="d-flex justify-content-between">
-                                                <small>1 (En Düşük)</small>
-                                                <span class="slider-value" id="leadershipValue">3</span>
-                                                <small>5 (En Yüksek)</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="climate-slider">
-                                            <label class="form-label fw-bold">
-                                                <i class="fas fa-smile me-2"></i>Mağaza Genel İklimi - Motivasyon
-                                            </label>
-                                            <input type="range" class="form-range" min="1" max="5" id="climateMotivation" value="3">
-                                            <div class="d-flex justify-content-between">
-                                                <small>1 (En Düşük)</small>
-                                                <span class="slider-value" id="motivationValue">3</span>
-                                                <small>5 (En Yüksek)</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="checklist-section mb-4">
-                                    <label class="form-label fw-bold">
-                                        <i class="fas fa-calendar-alt me-2"></i>Ziyaret dönemine özel gündem var mı?
-                                    </label>
-                                    <div class="mt-2">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="specialAgenda" id="specialAgenda_yes" value="Evet" onchange="toggleConditionalField('specialAgendaDetails', this.checked)">
-                                            <label class="form-check-label" for="specialAgenda_yes">Evet</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="specialAgenda" id="specialAgenda_no" value="Hayır" onchange="toggleConditionalField('specialAgendaDetails', false)">
-                                            <label class="form-check-label" for="specialAgenda_no">Hayır</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="specialAgenda" id="specialAgenda_na" value="N/A" onchange="toggleConditionalField('specialAgendaDetails', false)">
-                                            <label class="form-check-label" for="specialAgenda_na">N/A</label>
-                                        </div>
-                                    </div>
-
-                                    <div id="specialAgendaDetails" class="conditional-field" style="display: none;">
-                                        <div class="mb-3">
-                                            <label for="agendaDetails" class="form-label">Gündem Detayları</label>
-                                            <textarea class="form-control" id="agendaDetails" rows="3" placeholder="Özel gündem maddelerini detaylandırınız..."></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="otherTopics" class="form-label fw-bold">
-                                        <i class="fas fa-list me-2"></i>Gündemde olan diğer konu başlıkları, projeler, PUKÖ çalışmaları vb.
-                                    </label>
-                                    <textarea class="form-control" id="otherTopics" rows="4" placeholder="Diğer gündem maddelerini, projeleri ve PUKÖ çalışmalarını buraya yazınız..."></textarea>
-                                </div>
-
-                                <!-- Açık Kapı Süreci -->
-                                <div class="checklist-section">
-                                    <h6><i class="fas fa-door-open me-2"></i>Açık Kapı Süreci</h6>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label class="form-label">Birebir görüşme talep eden çalışan sayısı</label>
-                                            <input type="number" class="form-control" min="0" placeholder="0">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label class="form-label">Gerçekleştirilen görüşme sayısı</label>
-                                            <input type="number" class="form-control" min="0" placeholder="0">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Görüşme konu başlıkları</label>
-                                        <textarea class="form-control" rows="2" placeholder="Birebir görüşmelerde ele alınan konular..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Form Navigasyon -->
-                    <div class="d-flex justify-content-between mt-4">
-                        <button type="button" class="btn btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">
-                            <i class="fas fa-arrow-left me-2"></i>Önceki
-                        </button>
-                        <div class="ms-auto">
-                            <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">
-                                Sonraki<i class="fas fa-arrow-right ms-2"></i>
-                            </button>
-                            <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
-                                <i class="fas fa-save me-2"></i>Ziyareti Kaydet
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- İlerleme Çubuğu -->
-                    <div class="progress-container">
-                        <div class="progress" style="height: 8px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" id="progressBar" style="width: 25%"></div>
-                        </div>
-                        <div class="text-center mt-2">
-                            <small class="text-muted">Adım <span id="currentStep">1</span> / 4 - <span id="stepTitle">Genel Bilgiler</span></small>
-                        </div>
-                    </div>
-                </form>
             </div>
 
             <!-- Ziyaret Geçmişi -->
             <div id="history" class="content-section" style="display: none;">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1><i class="fas fa-history me-2"></i>Ziyaret Geçmişi</h1>
-                    <div>
-                        <button class="btn btn-outline-primary btn-sm me-2" onclick="filterVisits()">
-                            <i class="fas fa-filter me-1"></i>Filtrele
-                        </button>
-                        <button class="btn btn-success btn-sm" onclick="exportToExcel()">
-                            <i class="fas fa-file-excel me-1"></i>Excel'e Aktar
-                        </button>
-                    </div>
+                <h1 class="mb-4"><i class="fas fa-history me-2"></i>Ziyaret Geçmişi</h1>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Bu bölüm geliştirilme aşamasında...
                 </div>
+            </div>
+
+            <!-- Raporlar -->
+            <div id="reports" class="content-section" style="display: none;">
+                <h1 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Raporlar</h1>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Bu bölüm geliştirilme aşamasında...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Geçerli kullanıcı bilgileri
+        const validUsers = {
+            'demo@example.com': { password: 'demo123', name: 'Demo Kullanıcı', role: 'HRBP' },
+            'admin@test.com': { password: 'admin123', name: 'Admin Kullanıcı', role: 'Admin' },
+            'hrbp@test.com': { password: 'hrbp123', name: 'HRBP Kullanıcı', role: 'HRBP' }
+        };
+
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form submit olayını dinle
+            document.getElementById('loginForm').addEventListener('submit', login);
+            
+            // Bugünün tarihini ayarla
+            const today = new Date().toISOString().split('T')[0];
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            dateInputs.forEach(input => {
+                if (!input.value) input.value = today;
+            });
+        });
+
+        // Giriş fonksiyonu
+        function login(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            console.log('Giriş denemesi:', email, password); // Debug için
+            
+            // Kullanıcı doğrulama
+            if (validUsers[email] && validUsers[email].password === password) {
+                // Başarılı giriş
+                const user = validUsers[email];
                 
-                <!-- Filtreler -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h6 class="mb-0"><i class="fas fa-search me-2"></i>Arama ve Filtreler</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Mağaza</label>
-                                <select class="form-select" id="filterStore">
-                                    <option value="">Tüm Mağazalar</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Bölge</label>
-                                <select class="form-select" id="filterRegion">
-                                    <option value="">Tüm Bölgeler</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Başlangıç Tarihi</label>
-                                <input type="date" class="form-control" id="filterDateFrom">
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Bitiş Tarihi</label>
-                                <input type="date" class="form-control" id="filterDateTo">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">HRBP</label>
-                                <select class="form-select" id="filterHrbp">
-                                    <option value="">Tüm HRBP'ler</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Ziyaret Amacı</label>
-                                <select class="form-select" id="filterPurpose">
-                                    <option value="">Tüm Amaçlar</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">İklim Skoru</label>
-                                <select class="form-select" id="filterClimate">
-                                    <option value="">Tümü</option>
-                                    <option value="5">5 - Mükemmel</option>
-                                    <option value="4">4 - İyi</option>
-                                    <option value="3">3 - Orta</option>
-                                    <option value="2">2 - Zayıf</option>
-                                    <option value="1">1 - Çok Zayıf</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Arama</label>
-                                <input type="text" class="form-control" id="searchText" placeholder="Notlarda ara...">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <button class="btn btn-primary" onclick="applyFilters()">
-                                    <i class="fas fa-search me-2"></i>Filtrele
-                                </button>
-                                <button class="btn btn-secondary ms-2" onclick="clearFilters()">
-                                    <i class="fas fa-times me-2"></i>Temizle
-                                </button>
-                            </div>
-                        </div>
+                showLoginMessage('Başarıyla giriş yaptınız!', 'success');
+                
+                setTimeout(() => {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('app').style.display = 'block';
+                    document.getElementById('currentUser').textContent = user.name;
+                    
+                    // Kullanıcı bilgilerini sakla
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                }, 1000);
+                
+            } else {
+                // Hatalı giriş
+                showLoginMessage('E-posta veya şifre hatalı!', 'error');
+                
+                // Hata animasyonu
+                const loginCard = document.querySelector('.login-card');
+                loginCard.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    loginCard.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // Giriş mesajı göster
+        function showLoginMessage(message, type) {
+            const alertDiv = document.getElementById('loginAlert');
+            alertDiv.className = type === 'success' ? 'alert alert-success' : 'alert alert-danger';
+            alertDiv.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation-triangle'} me-2"></i>${message}`;
+            alertDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        // Çıkış fonksiyonu
+        function logout() {
+            if (confirm('Çıkış yapmak istediğinizden emin misiniz?')) {
+                localStorage.removeItem('currentUser');
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('app').style.display = 'none';
+                
+                // Formu temizle
+                document.getElementById('loginEmail').value = 'demo@example.com';
+                document.getElementById('loginPassword').value = 'demo123';
+            }
+        }
+
+        // Bölüm gösterme
+        function showSection(sectionId, element) {
+            // Tüm bölümleri gizle
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Seçili bölümü göster
+            document.getElementById(sectionId).style.display = 'block';
+            
+            // Menü aktif durumu
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            if (element) {
+                element.classList.add('active');
+            }
+        }
+
+        // Sayfa yüklendiğinde oturum kontrolü
+        window.addEventListener('load', function() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+                document.getElementById('currentUser').textContent = user.name;
+            }
+        });
+    </script>
+</body>
+</html>
